@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      AWS_S3_BUCKET_NAME: myangularwebappdeploy
+      AWS_CF_DISTRIBUTION_ID: E2A59XCLHZWJO6
     steps:
       - name: Checkout source code
         uses: actions/checkout@v1
@@ -16,12 +19,6 @@ jobs:
 
       - name: Build App
         run: yarn run nx build webapp --prod --skip-nx-cache
-
-      - name: Generate deployment package
-        uses: papeloto/action-zip@v1
-        with:
-          files: dist/apps/api
-          dest: deploy.zip
 
       - name: Upload WebApp to S3 Bucket
         uses: jakejarvis/s3-sync-action@master
